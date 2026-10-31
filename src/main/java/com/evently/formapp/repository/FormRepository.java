@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface FormRepository extends JpaRepository<Form, UUID> {
-    List<Form> findByEventId(UUID eventId);
+    List<Form> findByEventUuid(UUID eventId);
+    Form findByUuid(UUID uuid);
 
 }

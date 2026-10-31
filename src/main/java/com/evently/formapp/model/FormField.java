@@ -11,10 +11,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@Getter
 @Entity
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class FormField {
 
     @Id
@@ -36,8 +40,14 @@ public class FormField {
     @Column(nullable = false)
     private FieldType type;
 
-    private boolean required;
+    public FormField(Form form, String name, String label, FieldType type, boolean required) {
+        this.form = form;
+        this.name = name;
+        this.label = label;
+        this.type = type;
+        this.required = required;
+    }
 
-    private int position;         // order on the form
+    private boolean required;
 
 }
