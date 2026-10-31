@@ -83,7 +83,6 @@ public class FormService {
         if (!eventRepository.existsById(eventId)) {
             throw new NotFoundException("Event not found: " + eventId);
         }
-
         List<Form> forms = formRepository.findByEventUuid(eventId);
         return forms.stream().map(form -> new FormResponse(
                 form.getUuid(),

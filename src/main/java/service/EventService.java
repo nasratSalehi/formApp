@@ -8,6 +8,7 @@ import com.evently.formapp.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,10 +40,10 @@ public class EventService {
         return new EventResponse(event.getUuid(), event.getName(), event.getEventType());
     }
 
-    public EventResponse findAllEvents() {
+    public List<EventResponse> findAllEvents() {
         return eventRepository.findAll().stream().map(event -> new EventResponse(
                 event.getUuid(),
                 event.getName(),
-                event.getEventType())).findFirst().orElseThrow();
+                event.getEventType())).toList();
     }
 }
