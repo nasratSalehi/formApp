@@ -13,10 +13,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class FormField {
@@ -25,16 +27,15 @@ public class FormField {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "form_id")
     private Form form;
 
     @Column(nullable = false)
-    private String name;          // key in the JSON, e.g. "email"
+    private String name;
 
     @Column(nullable = false)
-    private String label;         // shown to the user, e.g. "E-mail"
+    private String label;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

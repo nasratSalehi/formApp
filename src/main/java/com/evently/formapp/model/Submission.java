@@ -12,7 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
@@ -34,16 +35,12 @@ public class Submission {
     private Map<String, Object> answers;
 
     @Column(name = "submitted_at", nullable = false)
-    private Date submittedAt;
+    private LocalDateTime submittedAt;
 
-    public Submission(Form form, Map<String, Object> answers, Date submittedAt) {
+    public Submission(Form form, Map<String, Object> answers, LocalDateTime submittedAt) {
         this.form = form;
         this.answers = answers;
         this.submittedAt = submittedAt;
-    }
-
-    public Submission(Map<String, Object> answers) {
-        this.answers = answers;
     }
 
 

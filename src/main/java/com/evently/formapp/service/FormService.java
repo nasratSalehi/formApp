@@ -12,7 +12,6 @@ import com.evently.formapp.repository.EventRepository;
 import com.evently.formapp.repository.FormRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -43,40 +42,14 @@ public class FormService {
     public List<FormResponse> findAllForms() {
 
         List<Form> forms = formRepository.findAll();
-        if(forms.isEmpty()){
-            throw new NotFoundException("No forms found");
-        }
-        return forms.stream().map(
-                form -> new FormResponse(
-                        form.getUuid(),
-                        form.getEvent().getUuid(),
-                        form.getTitle(),
-                        form.getFields().stream()
-                                .map(field -> new FieldResponse(
-                                        field.getName(),
-                                        field.getLabel(),
-                                        field.getType(),
-                                        field.isRequired())).toList())
+        return forms.stream().map(this::mapToResponse
         ).toList();
     }
 
     public FormResponse findByUuid(UUID uuid) {
-        Form form = formRepository.findByUuid(uuid);
-        if(form == null){
-            throw new NotFoundException("Form not found");
-        }
-        return new FormResponse(
-                form.getUuid(),
-                form.getEvent().getUuid(),
-                form.getTitle(),
-                form.getFields().stream()
-                        .map(field1 -> new FieldResponse(
-                                field1.getName(),
-                                field1.getLabel(),
-                                field1.getType(),
-                                field1.isRequired()
-                        )).toList()
-        );
+        Form form = formRepository.findById(uuid).orElseThrow(() -> new NotFoundException("Form not found: " + uuid));
+        return mapToResponse(form);
+
     }
 
     public List<FormResponse> findFormsByEventUuid(UUID eventId) {
@@ -84,16 +57,23 @@ public class FormService {
             throw new NotFoundException("Event not found: " + eventId);
         }
         List<Form> forms = formRepository.findByEventUuid(eventId);
-        return forms.stream().map(form -> new FormResponse(
+        return forms.stream().map(this::mapToResponse).toList();
+    }
+    
+    private FormResponse mapToResponse(Form form){
+        return new FormResponse(
                 form.getUuid(),
                 form.getEvent().getUuid(),
                 form.getTitle(),
-                form.getFields().stream().map(formField -> new FieldResponse(
-                        formField.getName(),
-                        formField.getLabel(),
-                        formField.getType(),
-                        formField.isRequired())).toList())
-        ).toList();
+                form.getFields().stream()
+                        .map(field -> new FieldResponse(
+                                field.getName(),
+                                field.getLabel(),
+                                field.getType(),
+                                field.isRequired()
+                        )).toList()
+                
+        );
     }
 
 

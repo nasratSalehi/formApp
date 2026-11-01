@@ -50,5 +50,6 @@ public class Form {
 
     public void addField(FormField formField) {
         fields.add(formField);
+        formField.setForm(this);
     }
 }

@@ -1,8 +1,6 @@
 package com.evently.formapp.dto;
-
-import jakarta.validation.constraints.NotNull;
-
+import jakarta.validation.constraints.NotEmpty;
 import java.util.Map;
 
-public record CreateSubmissionRequest(@NotNull Map<String, Object> answers) {
+public record CreateSubmissionRequest(@NotEmpty Map<String, Object> answers) {
 }
