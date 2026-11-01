@@ -1,4 +1,4 @@
-package controller;
+package com.evently.formapp.controller;
 
 import com.evently.formapp.dto.CreateEventRequest;
 import com.evently.formapp.dto.EventResponse;
@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import service.EventService;
-import service.FormService;
+import com.evently.formapp.service.EventService;
+import com.evently.formapp.service.FormService;
 
 import java.net.URI;
 import java.util.List;
@@ -44,8 +45,8 @@ public class EventController {
         return ResponseEntity.ok(eventService.findEventByUuid(uuid));
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<EventResponse> findEventByName(@PathVariable String name){
+    @GetMapping("/search")
+    public ResponseEntity<EventResponse> findEventByName(@RequestParam String name){
         return ResponseEntity.ok(eventService.findEventByName(name));
     }
 

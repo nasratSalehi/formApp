@@ -1,4 +1,4 @@
-package service;
+package com.evently.formapp.service;
 
 import com.evently.formapp.dto.CreateEventRequest;
 import com.evently.formapp.dto.EventResponse;

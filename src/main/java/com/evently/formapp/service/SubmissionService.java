@@ -1,4 +1,4 @@
-package service;
+package com.evently.formapp.service;
 
 import com.evently.formapp.dto.CreateSubmissionRequest;
 import com.evently.formapp.dto.SubmissionResponse;
@@ -28,10 +28,11 @@ public class SubmissionService {
             throw new NotFoundException("Form not found");
         }
         Submission submission = new Submission(form, request.answers(), new Date());
-        return new SubmissionResponse(submission.getUuid(),
-                submission.getForm().getUuid(),
-                submission.getAnswers(),
-                submission.getSubmittedAt());
+        Submission savedSubmission = submissionRepository.save(submission);
+        return new SubmissionResponse(savedSubmission.getUuid(),
+                savedSubmission.getForm().getUuid(),
+                savedSubmission.getAnswers(),
+                savedSubmission.getSubmittedAt());
     }
 
     public List<SubmissionResponse> findAllSubmissions(UUID formUuid) {

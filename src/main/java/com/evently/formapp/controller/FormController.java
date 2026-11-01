@@ -1,4 +1,4 @@
-package controller;
+package com.evently.formapp.controller;
 
 import com.evently.formapp.dto.CreateFormRequest;
 import com.evently.formapp.dto.FormResponse;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import service.FormService;
+import com.evently.formapp.service.FormService;
 
 import java.net.URI;
 import java.util.List;
