@@ -41,12 +41,16 @@ public class FormField {
     @Column(nullable = false)
     private FieldType type;
 
-    public FormField(Form form, String name, String label, FieldType type, boolean required) {
+    @Column(nullable = false)
+    private int position;
+
+    public FormField(Form form, String name, String label, FieldType type, boolean required, int position) {
         this.form = form;
         this.name = name;
         this.label = label;
         this.type = type;
         this.required = required;
+        this.position = position;
     }
 
     private boolean required;

@@ -26,10 +26,10 @@ public class FormService {
     public FormResponse createForm(CreateFormRequest request) {
         Event event = eventRepository.findById(request.eventId())
                 .orElseThrow(() -> new NotFoundException("Event not found: " + request.eventId()));
-
+        int position = 0;
         Form form = new Form(event, request.title());
         for (FieldRequest field : request.fields()) {
-            form.addField(new FormField(form, field.name(), field.label(), field.fieldType(), field.required()));
+            form.addField(new FormField(form, field.name(), field.label(), field.fieldType(), field.required(), position++));
         }
         Form savedForm = formRepository.save(form);
         List<FieldResponse> fields = savedForm.getFields().stream()

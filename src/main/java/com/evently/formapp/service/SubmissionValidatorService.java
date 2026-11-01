@@ -4,6 +4,7 @@ import com.evently.formapp.exception.ValidationException;
 import com.evently.formapp.model.Form;
 import com.evently.formapp.model.FormField;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class SubmissionValidatorService {
         Set<String> existingFields = new HashSet<>();
         List<String> errors = new ArrayList<>();
 
+        if (answers == null || answers.isEmpty()) {
+            throw new ValidationException(List.of("Answers cannot be empty"));
+        }
         for (FormField field : form.getFields()) {
             Object value = answers.get(field.getName());
             existingFields.add(field.getName());
@@ -31,9 +35,9 @@ public class SubmissionValidatorService {
                 }
                 continue;
             }
-            if(value != null){
+            if (value != null) {
                 String error = checkType(field, value);
-                if(error != null){
+                if (error != null) {
                     errors.add(error);
                 }
             }
@@ -44,7 +48,7 @@ public class SubmissionValidatorService {
             }
         }
 
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
     }
@@ -72,7 +76,7 @@ public class SubmissionValidatorService {
                 }
                 break;
             case EMAIL:
-                if(!isValidEmail(value)){
+                if (!isValidEmail(value)) {
                     return field.getName() + " must be a valid email";
                 }
                 break;
@@ -80,11 +84,11 @@ public class SubmissionValidatorService {
         return null;
     }
 
-    public boolean isEmpty(Object value) {
+    private boolean isEmpty(Object value) {
         return value == null || (value instanceof String s && s.isBlank());
     }
 
-    public boolean isValidEmail(Object value) {
+    private boolean isValidEmail(Object value) {
         if (!(value instanceof String)) {
             return false;
         }
@@ -92,15 +96,15 @@ public class SubmissionValidatorService {
         return EMAIL_PATTERN.matcher(email).matches();
     }
 
-    public boolean isDate(Object value) {
+    private boolean isDate(Object value) {
         if (!(value instanceof String)) {
             return false;
         }
         String text = (String) value;
-        try{
+        try {
             LocalDate.parse(text);
             return true;
-        } catch (DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             return false;
         }
 

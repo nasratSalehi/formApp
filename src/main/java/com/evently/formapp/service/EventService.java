@@ -32,8 +32,8 @@ public class EventService {
         return new EventResponse(event.getUuid(), event.getName(), event.getEventType());
     }
 
-    public EventResponse findEventByName(String name) {
-        Event event = eventRepository.findByName(name);
+    public EventResponse findEventByNameLike(String name) {
+        Event event = eventRepository.findByNameLike("%" + name + "%");
         if(event == null){
             throw new NotFoundException("Event not found");
         }

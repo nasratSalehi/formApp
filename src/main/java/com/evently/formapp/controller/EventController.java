@@ -47,7 +47,7 @@ public class EventController {
 
     @GetMapping("/search")
     public ResponseEntity<EventResponse> findEventByName(@RequestParam String name){
-        return ResponseEntity.ok(eventService.findEventByName(name));
+        return ResponseEntity.ok(eventService.findEventByNameLike("%" + name + "%"));
     }
 
     @GetMapping("/{eventUuid}/forms")

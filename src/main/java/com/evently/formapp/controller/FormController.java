@@ -2,8 +2,10 @@ package com.evently.formapp.controller;
 
 import com.evently.formapp.dto.CreateFormRequest;
 import com.evently.formapp.dto.FormResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,18 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.evently.formapp.service.FormService;
 
+import java.lang.annotation.Documented;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/forms")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FormController {
 
     private final FormService formService;
 
     @PostMapping
+    @Operation(summary = "Create a new form. A field in a form has the following types: TEXT, DATE, EMAIL, NUMBER, BOOLEAN")
     public ResponseEntity<FormResponse> createForm(@Valid @RequestBody CreateFormRequest request) {
         FormResponse formResponse = formService.createForm(request);
         URI location = URI.create("/api/forms/" + formResponse.id());

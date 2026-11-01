@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,6 +36,7 @@ public class Form {
     private String title;
 
     @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    @OrderBy("position")
     private List<FormField> fields = new ArrayList<>();
 
     public Form(Event event, String title, List<FormField> fields) {
